@@ -69,3 +69,10 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 }
+
+/*
+https://www.computerworlduk.com/mobile/rss
+http://www.nrk.no/toppsaker.rss
+https://news.google.com/news/rss/?ned=us&gl=US&hl=en
+https://www.vg.no/rss/feed/?categories=1068&keywords=&limit=10&format=rss
+ */
