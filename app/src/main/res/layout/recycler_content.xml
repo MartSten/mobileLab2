@@ -8,24 +8,34 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/xmlItemTitle"
+            android:id="@+id/Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:gravity="center"
             android:background="#b2b2ff"
+            android:gravity="center"
+            android:hint="Error: could not retrieve data from the given url" />
+
+        <TextView
+            android:id="@+id/Link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Title"
+            android:layout_centerHorizontal="true"
+            android:background="#ccccff"
+            android:gravity="center"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/summary"
-            android:gravity="center"
-            android:background="#ccccff"
+            android:id="@+id/Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/xmlItemTitle"
+            android:layout_below="@+id/Link"
             android:layout_centerHorizontal="true"
+            android:background="#ccccff"
+            android:gravity="center"
             android:text="TextView" />
     </RelativeLayout>
 

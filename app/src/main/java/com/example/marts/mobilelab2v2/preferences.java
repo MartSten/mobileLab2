@@ -1,7 +1,10 @@
 package com.example.marts.mobilelab2v2;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +22,7 @@ public class preferences extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
@@ -34,22 +37,32 @@ public class preferences extends AppCompatActivity {
         ArrayAdapter<String> limitAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, limitMins);
         limit.setAdapter(limitAdapter);
 
-        ArrayAdapter<String> rateAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, rates);
+        final ArrayAdapter<String> rateAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, rates);
         rate.setAdapter(rateAdapter);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences pref = getSharedPreferences("pref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
                 String text = rssUrl.getText().toString();
                 int limitRate = Integer.parseInt(rate.getSelectedItem().toString());
                 int limitLimit = Integer.parseInt(limit.getSelectedItem().toString());
-                editor.putString("rssUrl", text);
-                editor.putInt("rate", limitRate);
-                editor.putInt("limit", limitLimit);
-                editor.apply();
+                save(text, limitLimit, limitRate);
             }
         });
+    }
+
+    /**
+     * finishes the activity and sends data back to main
+     * @param url - the rss url
+     * @param limit - the limit
+     * @param rate - the rate
+     */
+    private void save(String url, int limit, int rate){
+        Intent i = new Intent();
+        i.putExtra("rssUrl", url);
+        i.putExtra("limit", limit);
+        i.putExtra("rate", rate);
+        setResult(Activity.RESULT_OK, i);
+        finish();
     }
 }

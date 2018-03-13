@@ -28,7 +28,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class RssReader extends AsyncTask<Void, Void, Void> {
 
     Context context;
-    String address = "https://news.google.com/news/rss/?ned=us&gl=US&hl=en";
+    private String address;
     URL url;
     ArrayList<Xmlitem>xmlitemArrayList;
     RecyclerView recyclerView;
@@ -36,19 +36,19 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
     public RssReader(Context context, RecyclerView recyclerView){
         this.context = context;
         this.recyclerView = recyclerView;
-        if(getUrl() != "NOURL"){
-            //address = getUrl();
-            String temp = getUrl();
-            Log.d("rssUrl", temp);
-        }
+        address = getUrl();
+        //address = "https://news.google.com/news/rss/?ned=us&gl=US&hl=en";
+        //getUrl();
+        Log.d("address", address);
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        recyclerAdapter adapter = new recyclerAdapter(context, xmlitemArrayList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(adapter);
+            recyclerAdapter adapter = new recyclerAdapter(context, xmlitemArrayList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(adapter);
+
     }
 
     /*@Override
@@ -67,18 +67,24 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
             xmlitemArrayList = new ArrayList<>();
             //Log.d("Root", data.getDocumentElement().getNodeName());
             Element root = data.getDocumentElement();
-            Node channel = root.getChildNodes().item(0); //Channel is item 1 of root
+            Node channel = root.getChildNodes().item(0);
+            //Log.d("xmlChannel",channel.getNodeName().toString());
+            //Added this check because trying to use the google new rss feed would crash the app if channel != root.getChildNodes().item(0)
+            //while other rss feeds needs item(1)
+            if(channel.getNodeName().equalsIgnoreCase("#text")){
+                channel = root.getChildNodes().item(1);
+            }
             NodeList items = channel.getChildNodes();
+            Log.d("numbOfItems", Integer.toString(items.getLength()));
             //for(int k = 0; k < getLimit(); k++){ does nothing
-                for(int i=0; i < items.getLength(); i++){  //doesn't run with getLimit
+                for(int i=0; i < items.getLength(); i++){
                     Node currentChild = items.item(i);
                     Xmlitem xmlitem = new Xmlitem();
-                    //  for(int k = 0; k < getLimit(); k++){  //Does not limit total amount, but it limits it to only re-use k items over and over
                     if(currentChild.getNodeName().equalsIgnoreCase("item")){
                         NodeList itemChild = currentChild.getChildNodes();
                         for(int j = 0; j < itemChild.getLength(); j++){
                             Node current = itemChild.item(j);
-                            //Log.d("textcontent", current.getTextContent());
+                            Log.d("textcontent", current.getTextContent());
                             if(current.getNodeName().equalsIgnoreCase("title")){
                                 xmlitem.setItemTitle(current.getTextContent());
                             }else if(current.getNodeName().equalsIgnoreCase("link")){
@@ -91,8 +97,6 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
                         //Log.d("xmlItemLink",xmlitem.getLink());
                         //Log.d("xmlItemTitle",xmlitem.getTitle());
                     }
-                    //}
-                //}
             }
 
         }
@@ -127,7 +131,12 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
      * @return - the url set by the user in the preferences activity
      */
     private String getUrl() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString("rssUrl", "NOURL");
+        SharedPreferences preferences = context.getSharedPreferences("lab2Prefs", Context.MODE_PRIVATE);
+        Log.d("hei", preferences.getString("rssUrl", "https://news.google.com/news/rss/?ned=us&gl=US&hl=en"));
+        Log.d("hei", "hei");
+        String test = preferences.getString("rssUrl", "https://news.google.com/news/rss/?ned=us&gl=US&hl=en");
+        Log.d("test", test);
+        //address = preferences.getString("rssUrl", "https://news.google.com/news/rss/?ned=us&gl=US&hl=en");
+        return preferences.getString("rssUrl", "http://www.nrk.no/toppsaker.rss");
     }
 }
