@@ -1,7 +1,7 @@
 # mobileLab2
 lab 2 for mobile dev at NTNU
 
-The code is based on this tutorial: 
+this is a WIP!
 
 The app fetches and pares a RSS v2.0 feed, provided by the user in the form of an url, and lists the items in a recyclerview.
 If the user clicks on any of the items in the recyclerview, a new activity with a webview opens and loads the page.
@@ -53,3 +53,8 @@ Checklist
  
 
  When the content article has graphics, it is rendered correctly.
+ 
+ 
+ 
+
+The code is based on this tutorial:  https://www.youtube.com/watch?v=19NSla4FNdQ
