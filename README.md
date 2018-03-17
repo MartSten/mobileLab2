@@ -53,7 +53,7 @@ The user should be able to specify in the preferences the URL to the RSS feed (R
  
  
  
-### OTHER INFO
+# OTHER INFO
 The code is based on this tutorial:  https://www.youtube.com/watch?v=19NSla4FNdQ
 
 The app (as of this moment) has no url validation. Pleas do only use rss v2.0 urls.
