@@ -31,10 +31,10 @@ public class preferences extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveBtn);
         rssUrl = findViewById(R.id.rssUrl);
 
-        String[] limitMins = new String[]{"10","60", "1440"};
-        String[] rates = new String[]{"10", "20", "50", "100"};
+        String[] limitNumber = new String[]{"10", "20", "50", "100"};
+        String[] rates = new String[]{"10","60", "1440"};
 
-        ArrayAdapter<String> limitAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, limitMins);
+        ArrayAdapter<String> limitAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, limitNumber);
         limit.setAdapter(limitAdapter);
 
         final ArrayAdapter<String> rateAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, rates);

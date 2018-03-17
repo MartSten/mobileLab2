@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     String url;
     int rate;
     int limit;
+    RssReader rssReader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), preferences.class);
                 startActivityForResult(i, code);
             }
+
+
         });
 
         //NÅR TIMER KOMMER PÅ PLASS. HUSK Å SJEKK OM PREF HAR VERDIER.
         savePreferences("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", 10, 10);
-        RssReader rssReader = new RssReader(this, recyclerView);
-        rssReader.execute();
+       // rssReader = new RssReader(this, recyclerView);
+       // rssReader.execute();
     }
 
     @Override

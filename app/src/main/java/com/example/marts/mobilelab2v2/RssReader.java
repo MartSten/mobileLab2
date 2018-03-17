@@ -51,10 +51,11 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
 
     }
 
-    /*@Override
+    @Override
     protected void onPreExecute() {
         super.onPreExecute();
-    }*/
+        Log.d("new Execute", "Running new execution");
+    }
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -62,21 +63,23 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    /**
+     * processes the xml by reading the dom of the provided document
+     * @param data - an xml document
+     */
     private void ProcessXml(Document data){
         if(data != null){
             xmlitemArrayList = new ArrayList<>();
-            //Log.d("Root", data.getDocumentElement().getNodeName());
             Element root = data.getDocumentElement();
             Node channel = root.getChildNodes().item(0);
-            //Log.d("xmlChannel",channel.getNodeName().toString());
-            //Added this check because trying to use the google new rss feed would crash the app if channel != root.getChildNodes().item(0)
+            //Added this check because trying to use the google-news rss feed would crash the app if channel != root.getChildNodes().item(0)
             //while other rss feeds needs item(1)
             if(channel.getNodeName().equalsIgnoreCase("#text")){
                 channel = root.getChildNodes().item(1);
             }
+
             NodeList items = channel.getChildNodes();
-            Log.d("numbOfItems", Integer.toString(items.getLength()));
-            //for(int k = 0; k < getLimit(); k++){ does nothing
+            //Log.d("numbOfItems", Integer.toString(items.getLength()));
                 for(int i=0; i < items.getLength(); i++){
                     Node currentChild = items.item(i);
                     Xmlitem xmlitem = new Xmlitem();
@@ -94,14 +97,16 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
                             }
                         }
                         xmlitemArrayList.add(xmlitem);
-                        //Log.d("xmlItemLink",xmlitem.getLink());
-                        //Log.d("xmlItemTitle",xmlitem.getTitle());
                     }
             }
 
         }
     }
 
+    /**
+     * gets the dom from the provided url, and returns it as a document.
+     * @return - the document containing the xml for the provided link
+     */
     private Document getData(){
         try {
             url = new URL(address);
@@ -132,10 +137,6 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
      */
     private String getUrl() {
         SharedPreferences preferences = context.getSharedPreferences("lab2Prefs", Context.MODE_PRIVATE);
-        Log.d("hei", preferences.getString("rssUrl", "https://news.google.com/news/rss/?ned=us&gl=US&hl=en"));
-        Log.d("hei", "hei");
-        String test = preferences.getString("rssUrl", "https://news.google.com/news/rss/?ned=us&gl=US&hl=en");
-        Log.d("test", test);
         //address = preferences.getString("rssUrl", "https://news.google.com/news/rss/?ned=us&gl=US&hl=en");
         return preferences.getString("rssUrl", "http://www.nrk.no/toppsaker.rss");
     }

@@ -1,6 +1,7 @@
 package com.example.marts.mobilelab2v2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,12 +35,22 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.Adapte
     }
 
     @Override
-    public void onBindViewHolder(AdapterViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterViewHolder holder, int position) {
         if(!xmlitemArrayList.isEmpty()){
-            Xmlitem currentItems = xmlitemArrayList.get(position);
+            final Xmlitem currentItems = xmlitemArrayList.get(position);
             holder.Title.setText(currentItems.getItemTitle());
             //holder.Description.setText(currentItems.getDescription());    //Messes things up. Have therefore been removed for now
             holder.Link.setText(currentItems.getLink());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, RssContent.class);
+                    i.putExtra("link", currentItems.link);
+                    context.startActivity(i);
+                }
+            });
+
+
         }
     }
 

@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".preferences" />
+        <activity android:name=".RssContent"></activity>
     </application>
 
 </manifest>
