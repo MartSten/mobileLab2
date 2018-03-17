@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     String url;
     int rate;
     int limit;
-    RssReader rssReader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-
-        //NÅR TIMER KOMMER PÅ PLASS. HUSK Å SJEKK OM PREF HAR VERDIER.
-        savePreferences("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", 10, 10);
-       // rssReader = new RssReader(this, recyclerView);
-       // rssReader.execute();
     }
 
     @Override
@@ -53,13 +47,21 @@ public class MainActivity extends AppCompatActivity {
                 url = data.getStringExtra("rssUrl");
                 limit = data.getIntExtra("limit", 10);
                 rate = data.getIntExtra("rate", 10);
+                //Saves the preferences
                 savePreferences(url, limit, rate);
+                //Loads the xml content in to the recyclerView
                 RssReader rssReader = new RssReader(this, recyclerView);
                 rssReader.execute();
             }
         }
     }
 
+    /**
+     * Saves the url, the limit, and the rate to the app preferences
+     * @param url - the xml url
+     * @param limit - the number of items shown in the recyclerView
+     * @param rate - the rate of how often the recycler is updated (not used)
+     */
     private void savePreferences(String url, int limit, int rate) {
         SharedPreferences pref = getSharedPreferences("lab2Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-/*
+/* Links to different rss feeds. Have been used for testing.
 https://www.computerworlduk.com/mobile/rss
 http://www.nrk.no/toppsaker.rss
 https://news.google.com/news/rss/?ned=us&gl=US&hl=en

@@ -6,6 +6,9 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * Class that shows the content of the WebView
+ */
 public class RssContent extends AppCompatActivity {
 
     WebView webView;
@@ -26,6 +29,7 @@ public class RssContent extends AppCompatActivity {
         //Makes all links open in the WebView (before this was added some would open the default browser instead)
         webView.setWebViewClient(new WebViewClient());
 
+        //Loads the url in the WebView
         webView.loadUrl(bundle.getString("link"));
     }
 }

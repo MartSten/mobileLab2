@@ -21,6 +21,11 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.Adapte
     private ArrayList<Xmlitem>xmlitemArrayList;
     private Context context;
 
+    /**
+     * constructor
+     * @param context - the context to use
+     * @param xmlitemArrayList - a list containing xmlItems
+     */
     recyclerAdapter(Context context, ArrayList<Xmlitem> xmlitemArrayList){
         this.context = context;
         this.xmlitemArrayList = xmlitemArrayList;
@@ -29,8 +34,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.Adapte
     @Override
     public AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recycler_content, parent, false);
-        //AdapterViewHolder holder = new AdapterViewHolder(view);
-        //return holder;
         return new AdapterViewHolder(view);
     }
 
@@ -41,6 +44,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.Adapte
             holder.Title.setText(currentItems.getItemTitle());
             //holder.Description.setText(currentItems.getDescription());    //Messes things up. Have therefore been removed for now
             holder.Link.setText(currentItems.getLink());
+            //Sets am onClickListener on all recyclerView items
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -56,11 +60,14 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.Adapte
 
     @Override
     public int getItemCount() {
-        //return xmlitemArrayList.size();
+        //Returns the number of items to be shown in the recyclerView
         SharedPreferences pref = context.getSharedPreferences("lab2Prefs", Context.MODE_PRIVATE);
         return pref.getInt("limit", 10);    //default number of items is 10
     }
 
+    /**
+     * Class for crating/holding items for the recyclerView.
+     */
     class AdapterViewHolder extends RecyclerView.ViewHolder {
         TextView Title;
         TextView Description;

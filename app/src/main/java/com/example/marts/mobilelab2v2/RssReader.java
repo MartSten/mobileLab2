@@ -33,17 +33,21 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
     ArrayList<Xmlitem>xmlitemArrayList;
     RecyclerView recyclerView;
 
+    /**
+     * Constructor for RssReader
+     * @param context - the context to use
+     * @param recyclerView - the recyclerView to use
+     */
     public RssReader(Context context, RecyclerView recyclerView){
         this.context = context;
         this.recyclerView = recyclerView;
         address = getUrl();
-        //address = "https://news.google.com/news/rss/?ned=us&gl=US&hl=en";
-        //getUrl();
         Log.d("address", address);
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
+        //Runs when an execute is executed
         super.onPostExecute(aVoid);
             recyclerAdapter adapter = new recyclerAdapter(context, xmlitemArrayList);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -53,12 +57,14 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
+        //runs before the code is executed
         super.onPreExecute();
         Log.d("new Execute", "Running new execution");
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
+        //Processes the xml data in the background
         ProcessXml(getData());
         return null;
     }
@@ -80,6 +86,8 @@ public class RssReader extends AsyncTask<Void, Void, Void> {
 
             NodeList items = channel.getChildNodes();
             //Log.d("numbOfItems", Integer.toString(items.getLength()));
+
+            //For each item get the title and the link
                 for(int i=0; i < items.getLength(); i++){
                     Node currentChild = items.item(i);
                     Xmlitem xmlitem = new Xmlitem();
