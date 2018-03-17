@@ -1,4 +1,4 @@
-# mobileLab2
+# mobileLab2 - RSS reader
 lab 2 for mobile dev at NTNU
 
 The app fetches and pares a RSS v2.0 feed, provided by the user in the form of an url, and lists the items in a recyclerview.
